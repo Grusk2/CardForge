@@ -56,20 +56,20 @@ const WORKSPACES: Array<{
 export default function HomePage() {
   const [card, setCard] = useState<CardFormValues>(initialCard);
   const [activeWorkspace, setActiveWorkspace] = useState<WorkspaceId>("card-editor");
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const settingsRef = useRef<HTMLDivElement | null>(null);
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
 
-  useEffect(() => {
     const stored = window.localStorage.getItem("cardforge-theme");
     if (stored === "light" || stored === "dark") {
-      setTheme(stored);
-      return;
+      return stored;
     }
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-    }
-  }, []);
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  });
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const settingsRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -192,15 +192,15 @@ export default function HomePage() {
       </aside>
 
       <div className="flex flex-1 justify-center px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
-        <div className="flex w-full max-w-6xl flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.9fr)] xl:items-start xl:gap-10">
-          <section className="order-1 flex flex-col gap-6">
+        <div className="flex w-full max-w-6xl flex-col gap-8 lg:flex-row lg:items-start lg:gap-12 xl:max-w-7xl">
+          <section className="flex min-w-0 flex-[1.6] flex-col gap-6">
             {activeWorkspace === "card-editor" ? <CardEditor onChange={setCard} /> : null}
             {activeWorkspace === "deck-check" ? <DeckBuilder /> : null}
             {activeWorkspace === "export" ? <ExportPanel card={card} /> : null}
             {activeWorkspace === "keyword" ? <KeywordManager /> : null}
           </section>
 
-          <section className="order-2 flex items-start justify-center xl:order-none xl:justify-end">
+          <section className="flex w-full shrink-0 justify-center lg:w-auto lg:justify-end">
             <CardPreview card={card} />
           </section>
         </div>
