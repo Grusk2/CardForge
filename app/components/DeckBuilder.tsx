@@ -4,6 +4,7 @@ import { useState } from "react";
 import { validateDeck } from "@/lib/validators";
 import type { DeckFormValues } from "@/lib/types";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { Select } from "@/app/components/ui/Select";
 
 const MOCK_LIBRARY = [
   { id: "c1", name: "Starwanderer", type: "Creature", rarity: "Rare" },
@@ -61,11 +62,11 @@ export function DeckBuilder() {
   const totalCards = deck.cards.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <section className="workspace-panel space-y-6">
+    <section className="workspace-panel space-y-6 text-slate-900 dark:text-slate-100">
       <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900">Deck Check</h2>
-          <p className="text-sm text-slate-600">
+          <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Deck Check</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Assemble a list and verify format constraints before locking a tournament build.
           </p>
         </div>
@@ -83,7 +84,7 @@ export function DeckBuilder() {
           <div className="workspace-panel__section space-y-3">
             <div className="space-y-1">
               <label>Deck name</label>
-              <p className="text-xs text-slate-500">Displayed on exports and deck registries.</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Displayed on exports and deck registries.</p>
             </div>
             <input
               value={deck.name}
@@ -94,33 +95,33 @@ export function DeckBuilder() {
           <div className="workspace-panel__section space-y-3">
             <div className="space-y-1">
               <label>Format</label>
-              <p className="text-xs text-slate-500">Applies legality checks to the card pool.</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Applies legality checks to the card pool.</p>
             </div>
-            <select
+            <Select
               value={deck.format}
               onChange={(event) => setDeck((prev) => ({ ...prev, format: event.target.value as DeckFormValues["format"] }))}
             >
               <option value="standard">Standard</option>
               <option value="unlimited">Unlimited</option>
-            </select>
+            </Select>
           </div>
         </div>
 
         <div className="workspace-panel__section space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700">Add card</h3>
-            <span className="text-[11px] uppercase text-slate-500">Library size: {MOCK_LIBRARY.length}</span>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-200">Add card</h3>
+            <span className="text-[11px] uppercase text-slate-500 dark:text-slate-400">Library size: {MOCK_LIBRARY.length}</span>
           </div>
           <div className="flex flex-col gap-3 lg:flex-row">
             <div className="flex flex-1 flex-col gap-2">
               <label>Card</label>
-              <select value={cardId} onChange={(event) => setCardId(event.target.value)}>
+              <Select value={cardId} onChange={(event) => setCardId(event.target.value)}>
                 {MOCK_LIBRARY.map((card) => (
                   <option key={card.id} value={card.id}>
                     {card.name} – {card.type}
                   </option>
                 ))}
-              </select>
+              </Select>
             </div>
             <div className="w-full space-y-2 lg:w-32">
               <label>Quantity</label>
@@ -139,7 +140,11 @@ export function DeckBuilder() {
                 }}
               />
             </div>
-            <button type="button" onClick={addCardToDeck} className="lg:w-40">
+            <button
+              type="button"
+              onClick={addCardToDeck}
+              className="lg:w-40 rounded-full bg-primary-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-400 focus-visible:outline focus-visible:outline-primary-300 dark:bg-primary-600 dark:hover:bg-primary-500"
+            >
               <PlusIcon className="mr-2 h-4 w-4" />
               Add card
             </button>
@@ -148,31 +153,31 @@ export function DeckBuilder() {
 
         <div className="workspace-panel__section space-y-4">
           <header className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-200">
               Card list ({totalCards} cards)
             </h3>
-            <span className="text-xs text-slate-500">Max 60 cards</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">Max 60 cards</span>
           </header>
-          <ul className="space-y-2 text-sm text-slate-700">
+          <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-200">
             {deck.cards.length === 0 ? (
-              <li className="text-xs text-slate-500">No cards have been added yet.</li>
+              <li className="text-xs text-slate-500 dark:text-slate-400">No cards have been added yet.</li>
             ) : (
               deck.cards.map((entry) => {
                 const card = MOCK_LIBRARY.find((item) => item.id === entry.cardId);
                 return (
-                  <li key={entry.cardId} className="flex items-center justify-between rounded-xl bg-slate-100 px-3 py-2">
+                  <li key={entry.cardId} className="flex items-center justify-between rounded-xl bg-slate-100 px-3 py-2 dark:bg-slate-800/70">
                     <div>
-                      <p className="font-medium text-slate-900">{card?.name ?? entry.cardId}</p>
-                      <p className="text-xs text-slate-500">
+                      <p className="font-medium text-slate-900 dark:text-slate-100">{card?.name ?? entry.cardId}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
                         {card?.type ?? "Unknown type"} • {card?.rarity ?? "?"}
                       </p>
                     </div>
                     <div className="flex items-center gap-4 text-sm">
-                      <span className="rounded-full bg-primary-100 px-2.5 py-1 text-xs font-semibold text-primary-600">x{entry.quantity}</span>
+                      <span className="rounded-full bg-primary-100 px-2.5 py-1 text-xs font-semibold text-primary-600 dark:bg-primary-500/20 dark:text-primary-200">x{entry.quantity}</span>
                       <button
                         type="button"
                         onClick={() => removeCard(entry.cardId)}
-                        className="text-xs text-rose-500 transition hover:text-rose-400"
+                        className="text-xs text-rose-500 transition hover:text-rose-400 dark:text-rose-400 dark:hover:text-rose-300"
                       >
                         Remove
                       </button>
@@ -185,13 +190,13 @@ export function DeckBuilder() {
         </div>
 
         {validationMessage ? (
-          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700 dark:border-emerald-500/50 dark:bg-emerald-500/10 dark:text-emerald-200">
             {validationMessage}
           </div>
         ) : null}
 
         {errors.length > 0 ? (
-          <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-600">
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-600 dark:border-rose-400/40 dark:bg-rose-500/10 dark:text-rose-200">
             <ul className="list-inside list-disc space-y-1">
               {errors.map((error, index) => (
                 <li key={`${error}-${index}`}>{error}</li>

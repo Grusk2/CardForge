@@ -7,6 +7,7 @@ import { KEYWORDS } from "@/lib/keywords";
 import type { CardFormValues } from "@/lib/types";
 import { validateCard } from "@/lib/validators";
 import clsx from "classnames";
+import { Select } from "@/app/components/ui/Select";
 
 const defaultValues: CardFormValues = {
   name: "",
@@ -93,11 +94,11 @@ export function CardEditor({ onChange }: CardEditorProps) {
   }
 
   return (
-    <section className="workspace-panel space-y-8">
+    <section className="workspace-panel space-y-8 text-slate-900 dark:text-slate-100">
       <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900">Card Editor</h2>
-          <p className="text-sm text-slate-600">
+          <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Card Editor</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Tune every attribute and validate the configuration before committing to a print run.
           </p>
         </div>
@@ -138,7 +139,7 @@ export function CardEditor({ onChange }: CardEditorProps) {
               </Field>
 
               <Field label="Card type" error={errors.type}>
-                <select
+                <Select
                   value={values.type}
                   onChange={(event) => handleChange("type", event.target.value as CardFormValues["type"])}
                 >
@@ -146,11 +147,11 @@ export function CardEditor({ onChange }: CardEditorProps) {
                   <option value="Spell">Spell</option>
                   <option value="Artifact">Artifact</option>
                   <option value="Hero">Hero</option>
-                </select>
+                </Select>
               </Field>
 
               <Field label="Rarity" error={errors.rarity}>
-                <select
+                <Select
                   value={values.rarity}
                   onChange={(event) => handleChange("rarity", event.target.value as CardFormValues["rarity"])}
                 >
@@ -158,7 +159,7 @@ export function CardEditor({ onChange }: CardEditorProps) {
                   <option value="Uncommon">Uncommon</option>
                   <option value="Rare">Rare</option>
                   <option value="Mythic">Mythic</option>
-                </select>
+                </Select>
               </Field>
 
               <Field label="Set ID" error={errors.setId}>
@@ -280,7 +281,7 @@ function Field({
   return (
     <div className={clsx("space-y-2", className)}>
       <div className="flex items-center justify-between">
-        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</label>
+        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">{label}</label>
         {error ? <span className="text-xs text-rose-500">{error}</span> : null}
       </div>
       {children}
@@ -307,8 +308,8 @@ function Section({
       )}
     >
       <div className="space-y-1">
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700">{title}</h3>
-        <p className="text-xs text-slate-500">{description}</p>
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-200">{title}</h3>
+        <p className="text-xs text-slate-500 dark:text-slate-400">{description}</p>
       </div>
       {children}
     </div>
@@ -336,19 +337,19 @@ function KeywordSelector({
     <div className="flex flex-col gap-4">
       <Combobox value={query} onChange={onAddKeyword}>
         <div className="relative">
-          <div className="relative w-full cursor-default overflow-hidden rounded-xl border border-slate-300 bg-white text-left shadow-sm focus-within:border-primary-300 focus-within:ring-2 focus-within:ring-primary-100">
+          <div className="relative w-full cursor-default overflow-hidden rounded-xl border border-slate-300 bg-white text-left shadow-sm focus-within:border-primary-300 focus-within:ring-2 focus-within:ring-primary-100 dark:border-slate-700 dark:bg-slate-900 dark:focus-within:border-primary-500 dark:focus-within:ring-primary-600/40">
             <Combobox.Input
-              className="w-full bg-transparent py-2 pl-3 pr-10 text-sm leading-5 text-slate-900 focus:outline-none"
+              className="w-full bg-transparent py-2 pl-3 pr-10 text-sm leading-5 text-slate-900 focus:outline-none dark:text-slate-100"
               displayValue={() => query}
               onChange={(event) => onQueryChange(event.target.value)}
               placeholder="Search keywords"
             />
-            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400">
+            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400 dark:text-slate-500">
               <ChevronUpDownIcon className="h-5 w-5" aria-hidden="true" />
             </Combobox.Button>
           </div>
           {suggestions.length > 0 ? (
-            <Combobox.Options className="absolute z-10 mt-1 max-h-40 w-full overflow-auto rounded-xl border border-slate-200 bg-white py-1 text-sm shadow-lg">
+            <Combobox.Options className="absolute z-10 mt-1 max-h-40 w-full overflow-auto rounded-xl border border-slate-200 bg-white py-1 text-sm shadow-lg dark:border-slate-700 dark:bg-slate-900">
               {suggestions.map((keyword) => (
                 <Combobox.Option
                   key={keyword}
@@ -356,7 +357,9 @@ function KeywordSelector({
                   className={({ active }) =>
                     clsx(
                       "relative cursor-default select-none py-2 pl-8 pr-4",
-                      active ? "bg-primary-50 text-primary-600" : "text-slate-700"
+                      active
+                        ? "bg-primary-50 text-primary-600 dark:bg-primary-500/20 dark:text-primary-200"
+                        : "text-slate-700 dark:text-slate-200"
                     )
                   }
                 >
@@ -364,7 +367,7 @@ function KeywordSelector({
                     <>
                       <span className="block truncate">{keyword}</span>
                       {active ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-primary-500">
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-primary-500 dark:text-primary-200">
                           <CheckIcon className="h-5 w-5" aria-hidden="true" />
                         </span>
                       ) : null}
@@ -381,13 +384,13 @@ function KeywordSelector({
         {selectedKeywords.map((keyword) => (
           <span
             key={keyword}
-            className="inline-flex items-center gap-2 rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary-700"
+            className="inline-flex items-center gap-2 rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary-700 dark:bg-primary-500/20 dark:text-primary-200"
           >
             {keyword}
             <button
               type="button"
               onClick={() => onRemoveKeyword(keyword)}
-              className="rounded-full bg-primary-200/80 p-0.5 text-primary-700 hover:bg-primary-300"
+              className="rounded-full bg-primary-200/80 p-0.5 text-primary-700 transition hover:bg-primary-300 dark:bg-primary-500/20 dark:text-primary-100 dark:hover:bg-primary-500/30"
             >
               <XMarkIcon className="h-3 w-3" />
             </button>
@@ -396,7 +399,7 @@ function KeywordSelector({
         <button
           type="button"
           onClick={() => (query ? onAddKeyword(query) : null)}
-          className="inline-flex items-center gap-1 text-xs font-medium text-primary-600"
+          className="inline-flex items-center gap-1 text-xs font-medium text-primary-600 dark:text-primary-300"
         >
           <PlusIcon className="h-4 w-4" />
           Add keyword

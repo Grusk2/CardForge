@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { CardFormValues } from "@/lib/types";
 import { DocumentArrowDownIcon } from "@heroicons/react/24/outline";
+import { Select } from "@/app/components/ui/Select";
 
 interface ExportPanelProps {
   card: CardFormValues;
@@ -28,11 +29,11 @@ export function ExportPanel({ card }: ExportPanelProps) {
   }
 
   return (
-    <section className="workspace-panel space-y-6">
+    <section className="workspace-panel space-y-6 text-slate-900 dark:text-slate-100">
       <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold text-slate-900">Export Toolkit</h2>
-          <p className="text-sm text-slate-600">
+          <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Export Toolkit</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Package the current card as structured data or production-ready assets.
           </p>
         </div>
@@ -49,25 +50,21 @@ export function ExportPanel({ card }: ExportPanelProps) {
       <div className="grid gap-4 lg:grid-cols-[minmax(0,180px)_1fr] lg:items-start">
         <div className="space-y-3">
           <div className="space-y-1">
-            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Format</label>
-            <p className="text-xs text-slate-500">Choose the pipeline destination.</p>
+            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">Format</label>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Choose the pipeline destination.</p>
           </div>
-          <select
-            value={format}
-            onChange={(event) => setFormat(event.target.value as typeof format)}
-            className="rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-inner focus:border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-200"
-          >
+          <Select value={format} onChange={(event) => setFormat(event.target.value as typeof format)}>
             <option value="json">JSON</option>
             <option value="png">PNG</option>
             <option value="pdf">PDF</option>
-          </select>
+          </Select>
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Preview</label>
-            <span className="text-[11px] uppercase text-slate-500">Read-only</span>
+            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">Preview</label>
+            <span className="text-[11px] uppercase text-slate-500 dark:text-slate-400">Read-only</span>
           </div>
-          <pre className="h-64 w-full overflow-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 font-mono text-xs text-slate-700">
+          <pre className="max-h-72 min-h-[18rem] w-full overflow-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 font-mono text-xs text-slate-700 shadow-inner shadow-slate-200 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-200">
             {jsonPreview}
           </pre>
         </div>
