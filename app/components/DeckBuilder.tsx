@@ -6,13 +6,13 @@ import type { DeckFormValues } from "@/lib/types";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 const MOCK_LIBRARY = [
-  { id: "c1", name: "Stjärnvandrare", type: "Creature", rarity: "Rare" },
-  { id: "c2", name: "Energisprång", type: "Spell", rarity: "Common" },
+  { id: "c1", name: "Starwanderer", type: "Creature", rarity: "Rare" },
+  { id: "c2", name: "Energy Surge", type: "Spell", rarity: "Common" },
   { id: "c3", name: "Temporal Ward", type: "Artifact", rarity: "Uncommon" }
 ];
 
 const defaultDeck: DeckFormValues = {
-  name: "Ny lek",
+  name: "New deck",
   format: "standard",
   cards: []
 };
@@ -51,7 +51,7 @@ export function DeckBuilder() {
     const result = validateDeck(deck);
     if (result.success) {
       setErrors([]);
-      setValidationMessage("Leken följer formatreglerna!");
+      setValidationMessage("The deck follows the format rules!");
     } else {
       setValidationMessage(null);
       setErrors(result.error.issues.map((issue) => issue.message));
@@ -64,24 +64,24 @@ export function DeckBuilder() {
     <section className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 shadow-xl">
       <header className="mb-6 flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-white">Deck-check</h2>
+          <h2 className="text-xl font-semibold text-white">Deck Check</h2>
           <p className="text-sm text-slate-400">
-            Bygg en lek och kontrollera att den följer begränsningar per format.
+            Build a deck and ensure it follows the restrictions for each format.
           </p>
         </div>
         <button type="button" onClick={validate}>
-          Validera lek
+          Validate deck
         </button>
       </header>
 
       <div className="space-y-4">
         <div className="flex flex-col gap-4 md:flex-row">
           <div className="flex-1 space-y-2">
-            <label>Leknamn</label>
+            <label>Deck name</label>
             <input
               value={deck.name}
               onChange={(event) => setDeck((prev) => ({ ...prev, name: event.target.value }))}
-              placeholder="Ex. Aether Rush"
+              placeholder="e.g. Aether Rush"
             />
           </div>
           <div className="w-full space-y-2 md:w-48">
@@ -97,10 +97,10 @@ export function DeckBuilder() {
         </div>
 
         <div className="rounded-2xl border border-white/5 bg-slate-950/70 p-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">Lägg till kort</h3>
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">Add card</h3>
           <div className="mt-3 flex flex-col gap-3 lg:flex-row">
             <div className="flex flex-1 flex-col gap-2">
-              <label>Kort</label>
+              <label>Card</label>
               <select value={cardId} onChange={(event) => setCardId(event.target.value)} className="bg-slate-900">
                 {MOCK_LIBRARY.map((card) => (
                   <option key={card.id} value={card.id}>
@@ -110,7 +110,7 @@ export function DeckBuilder() {
               </select>
             </div>
             <div className="w-full space-y-2 lg:w-32">
-              <label>Antal</label>
+              <label>Quantity</label>
               <input
                 type="number"
                 min={1}
@@ -128,7 +128,7 @@ export function DeckBuilder() {
             </div>
             <button type="button" onClick={addCardToDeck} className="lg:w-44">
               <PlusIcon className="mr-2 h-4 w-4" />
-              Lägg till kort
+              Add card
             </button>
           </div>
         </div>
@@ -136,13 +136,13 @@ export function DeckBuilder() {
         <div className="rounded-2xl border border-white/5 bg-slate-950/70 p-4">
           <header className="flex items-center justify-between">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
-              Kortlista ({totalCards} kort)
+              Card list ({totalCards} cards)
             </h3>
-            <span className="text-xs text-slate-500">Max 60 kort</span>
+            <span className="text-xs text-slate-500">Max 60 cards</span>
           </header>
           <ul className="mt-3 space-y-2 text-sm text-slate-200">
             {deck.cards.length === 0 ? (
-              <li className="text-xs text-slate-500">Inga kort har lagts till ännu.</li>
+              <li className="text-xs text-slate-500">No cards have been added yet.</li>
             ) : (
               deck.cards.map((entry) => {
                 const card = MOCK_LIBRARY.find((item) => item.id === entry.cardId);
@@ -151,7 +151,7 @@ export function DeckBuilder() {
                     <div>
                       <p className="font-medium text-slate-100">{card?.name ?? entry.cardId}</p>
                       <p className="text-xs text-slate-500">
-                        {card?.type ?? "Okänd typ"} • {card?.rarity ?? "?"}
+                        {card?.type ?? "Unknown type"} • {card?.rarity ?? "?"}
                       </p>
                     </div>
                     <div className="flex items-center gap-4 text-sm">
@@ -161,7 +161,7 @@ export function DeckBuilder() {
                         onClick={() => removeCard(entry.cardId)}
                         className="text-xs text-rose-300 hover:text-rose-200"
                       >
-                        Ta bort
+                        Remove
                       </button>
                     </div>
                   </li>

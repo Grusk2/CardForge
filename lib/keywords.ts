@@ -15,11 +15,11 @@ export const KEYWORDS = [
 
 export const keywordGroups = [
   {
-    name: "Offensiva",
+    name: "Offensive",
     keywords: ["Charge", "Berserk", "Quickdraw", "Pierce"]
   },
   {
-    name: "Defensiva",
+    name: "Defensive",
     keywords: ["Taunt", "Ward", "Retaliate"]
   },
   {

@@ -23,9 +23,9 @@ export function KeywordManager() {
   return (
     <section className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 shadow-xl">
       <header className="mb-6">
-        <h2 className="text-xl font-semibold text-white">Nyckelordshantering</h2>
+        <h2 className="text-xl font-semibold text-white">Keyword Management</h2>
         <p className="text-sm text-slate-400">
-          Centralt register för kortnyckelord. Lägg till egna termer och se vilka kortkategorier de tillhör.
+          Central registry for card keywords. Add your own terms and see which card categories they belong to.
         </p>
       </header>
 
@@ -46,17 +46,17 @@ export function KeywordManager() {
       </div>
 
       <div className="mt-6 rounded-2xl border border-dashed border-white/10 bg-slate-950/60 p-4">
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">Lägg till eget nyckelord</h3>
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">Add custom keyword</h3>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
           <input
             value={newKeyword}
             onChange={(event) => setNewKeyword(event.target.value)}
-            placeholder="Ex. Chronoshift"
+            placeholder="e.g. Chronoshift"
             className="flex-1"
           />
           <button type="button" onClick={handleAddKeyword} className="sm:w-36">
             <PlusIcon className="mr-2 h-4 w-4" />
-            Lägg till
+            Add keyword
           </button>
         </div>
         {customKeywords.length > 0 ? (
