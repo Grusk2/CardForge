@@ -100,7 +100,7 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-screen flex-col text-slate-900 transition-colors dark:text-slate-100 lg:flex-row">
-      <aside className="relative z-10 flex w-full flex-col justify-between gap-8 border-b border-slate-300/60 bg-white/80 px-6 py-6 shadow-sm backdrop-blur-lg transition dark:border-slate-700/80 dark:bg-slate-900/70 dark:shadow-black/30 lg:h-screen lg:w-72 lg:border-b-0 lg:border-r lg:px-6 lg:py-10 lg:shadow-md">
+      <aside className="relative z-10 flex w-full flex-col justify-between gap-8 border-b border-slate-300/60 bg-white/80 px-6 py-6 shadow-sm backdrop-blur-lg transition dark:border-slate-700/80 dark:bg-slate-900/70 dark:shadow-black/30 sm:px-8 lg:h-screen lg:w-80 lg:border-b-0 lg:border-r lg:px-8 lg:py-12 lg:shadow-md xl:gap-10 2xl:w-[24rem] 2xl:px-10 2xl:py-16">
         <div className="space-y-8">
           <div className="flex items-center gap-3">
             <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-lg font-semibold text-white dark:bg-slate-700">
@@ -112,7 +112,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <nav className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+          <nav className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:gap-3 2xl:gap-4">
             {WORKSPACES.map((workspace) => (
               <button
                 key={workspace.id}
@@ -191,16 +191,16 @@ export default function HomePage() {
         </div>
       </aside>
 
-      <div className="flex flex-1 justify-center px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
-        <div className="flex w-full max-w-6xl flex-col gap-8 lg:flex-row lg:items-start lg:gap-12 xl:max-w-7xl">
-          <section className="flex min-w-0 flex-[1.6] flex-col gap-6">
+      <div className="flex flex-1 justify-center px-4 py-8 sm:px-6 lg:px-12 lg:py-12 2xl:px-16 2xl:py-16">
+        <div className="flex w-full max-w-5xl flex-col gap-8 lg:flex-row lg:items-start lg:gap-12 xl:max-w-[1400px] 2xl:max-w-[1600px] 2xl:gap-16">
+          <section className="flex min-w-0 flex-[1.7] flex-col gap-6 2xl:gap-8">
             {activeWorkspace === "card-editor" ? <CardEditor onChange={setCard} /> : null}
             {activeWorkspace === "deck-check" ? <DeckBuilder /> : null}
             {activeWorkspace === "export" ? <ExportPanel card={card} /> : null}
             {activeWorkspace === "keyword" ? <KeywordManager /> : null}
           </section>
 
-          <section className="flex w-full shrink-0 justify-center lg:w-auto lg:justify-end">
+          <section className="flex w-full shrink-0 justify-center lg:w-auto lg:min-w-[340px] lg:justify-end xl:min-w-[380px] 2xl:min-w-[420px] 2xl:pt-4">
             <CardPreview card={card} />
           </section>
         </div>

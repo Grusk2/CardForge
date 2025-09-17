@@ -2,23 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
-}
+@layer base {
+  html {
+    font-size: clamp(15px, 0.6vw + 11px, 18px);
+  }
 
-body {
-  @apply min-h-screen bg-neutral-200 text-slate-900 antialiased transition-colors dark:bg-slate-950 dark:text-slate-100;
-  font-feature-settings: "ss01" 1, "cv02" 1;
-}
+  :root {
+    color-scheme: light;
+  }
 
-a {
-  @apply text-primary-600 transition hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300;
+  body {
+    @apply min-h-screen bg-neutral-200 text-slate-900 antialiased transition-colors dark:bg-slate-950 dark:text-slate-100;
+    font-feature-settings: "ss01" 1, "cv02" 1;
+  }
+
+  a {
+    @apply text-primary-600 transition hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300;
+  }
 }
 
 input,
 textarea,
 select {
-  @apply w-full appearance-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 shadow-inner shadow-slate-100 focus:border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-400 dark:shadow-none dark:focus:border-primary-500 dark:focus:ring-primary-600/40;
+  @apply w-full appearance-none rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-inner shadow-slate-100 focus:border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-400 dark:shadow-none dark:focus:border-primary-500 dark:focus:ring-primary-600/40 sm:text-[0.95rem];
 }
 
 label {
@@ -30,11 +36,11 @@ button {
 }
 
 .workspace-panel {
-  @apply rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-200/50 backdrop-blur dark:border-slate-700 dark:bg-slate-900/90 dark:shadow-black/30;
+  @apply rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-lg shadow-slate-200/50 backdrop-blur dark:border-slate-700 dark:bg-slate-900/90 dark:shadow-black/30 sm:p-7 xl:p-8 2xl:p-10;
 }
 
 .workspace-panel__section {
-  @apply rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800/70 dark:shadow-black/20;
+  @apply rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800/70 dark:shadow-black/20 sm:p-6 xl:p-7;
 }
 
 .workspace-panel__section--muted {

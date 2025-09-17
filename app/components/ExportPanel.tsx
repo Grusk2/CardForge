@@ -47,8 +47,8 @@ export function ExportPanel({ card }: ExportPanelProps) {
         </button>
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,180px)_1fr] lg:items-start">
-        <div className="space-y-3">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,260px)_minmax(0,1fr)] xl:items-start 2xl:gap-10">
+        <div className="space-y-5">
           <div className="space-y-1">
             <label className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">Format</label>
             <p className="text-xs text-slate-500 dark:text-slate-400">Choose the pipeline destination.</p>
@@ -59,14 +59,16 @@ export function ExportPanel({ card }: ExportPanelProps) {
             <option value="pdf">PDF</option>
           </Select>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
             <label className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">Preview</label>
             <span className="text-[11px] uppercase text-slate-500 dark:text-slate-400">Read-only</span>
           </div>
-          <pre className="max-h-72 min-h-[18rem] w-full overflow-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 font-mono text-xs text-slate-700 shadow-inner shadow-slate-200 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-200">
-            {jsonPreview}
-          </pre>
+          <div className="max-h-[28rem] min-h-[18rem] w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/90 shadow-inner shadow-slate-200 dark:border-slate-700 dark:bg-slate-900/70">
+            <pre className="h-full w-full overflow-auto p-4 font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200 sm:text-sm xl:p-5 xl:text-[0.95rem] whitespace-pre-wrap break-words">
+              {jsonPreview}
+            </pre>
+          </div>
         </div>
       </div>
     </section>
