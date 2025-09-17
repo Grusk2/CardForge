@@ -119,7 +119,7 @@ export default function HomePage() {
                 type="button"
                 onClick={() => handleWorkspaceSelect(workspace.id)}
                 className={clsx(
-                  "flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left transition focus-visible:outline-none",
+                  "flex w-full items-center gap-4 rounded-2xl px-4 py-4 text-left transition focus-visible:outline-none",
                   activeWorkspace === workspace.id
                     ? "bg-primary-500 text-white shadow-lg shadow-primary-200/60 dark:bg-primary-600 dark:shadow-primary-900/40"
                     : "text-slate-600 hover:bg-white/70 dark:text-slate-300 dark:hover:bg-slate-800/80"
@@ -127,7 +127,7 @@ export default function HomePage() {
               >
                 <span
                   className={clsx(
-                    "flex h-10 w-10 items-center justify-center rounded-full border text-sm font-semibold transition",
+                    "flex h-11 w-11 items-center justify-center rounded-full border text-sm font-semibold transition",
                     activeWorkspace === workspace.id
                       ? "border-white/60 bg-white/20 text-white"
                       : "border-slate-300 bg-white text-slate-600 dark:border-slate-600 dark:bg-slate-900/60 dark:text-slate-300"
@@ -153,9 +153,9 @@ export default function HomePage() {
           <button
             type="button"
             onClick={() => setIsSettingsOpen((prev) => !prev)}
-            className="flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-sm font-semibold text-slate-600 transition hover:bg-white/70 dark:text-slate-300 dark:hover:bg-slate-800/80"
+            className="flex w-full items-center gap-4 rounded-2xl px-4 py-4 text-sm font-semibold text-slate-600 transition hover:bg-white/70 dark:text-slate-300 dark:hover:bg-slate-800/80"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-xs font-semibold uppercase tracking-wider text-slate-600 dark:border-slate-600 dark:bg-slate-900/70 dark:text-slate-300">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-xs font-semibold uppercase tracking-wider text-slate-600 dark:border-slate-600 dark:bg-slate-900/70 dark:text-slate-300">
               ⚙️
             </span>
             Settings
@@ -192,7 +192,7 @@ export default function HomePage() {
       </aside>
 
       <div className="flex flex-1 justify-center px-4 py-8 sm:px-6 lg:px-12 lg:py-12 2xl:px-16 2xl:py-16">
-        <div className="flex w-full max-w-5xl flex-col gap-8 lg:flex-row lg:items-start lg:gap-12 xl:max-w-[1400px] 2xl:max-w-[1600px] 2xl:gap-16">
+        <div className="flex w-full max-w-5xl flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-12 xl:max-w-[1400px] 2xl:max-w-[1600px] 2xl:gap-16">
           <section className="flex min-w-0 flex-[1.7] flex-col gap-6 2xl:gap-8">
             {activeWorkspace === "card-editor" ? <CardEditor onChange={setCard} /> : null}
             {activeWorkspace === "deck-check" ? <DeckBuilder /> : null}
@@ -200,7 +200,7 @@ export default function HomePage() {
             {activeWorkspace === "keyword" ? <KeywordManager /> : null}
           </section>
 
-          <section className="flex w-full shrink-0 justify-center lg:w-auto lg:min-w-[340px] lg:justify-end xl:min-w-[380px] 2xl:min-w-[420px] 2xl:pt-4">
+          <section className="flex w-full shrink-0 items-center justify-center lg:w-auto lg:min-w-[340px] lg:justify-end lg:self-center xl:min-w-[380px] 2xl:min-w-[420px] 2xl:pt-4">
             <CardPreview card={card} />
           </section>
         </div>
