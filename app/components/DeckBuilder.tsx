@@ -61,31 +61,37 @@ export function DeckBuilder() {
   const totalCards = deck.cards.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <section className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 shadow-xl">
-      <header className="mb-6 flex items-center justify-between">
+    <section className="workspace-panel space-y-6">
+      <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-white">Deck Check</h2>
+          <h2 className="text-2xl font-semibold text-white">Deck Check</h2>
           <p className="text-sm text-slate-400">
-            Build a deck and ensure it follows the restrictions for each format.
+            Assemble a list and verify format constraints before locking a tournament build.
           </p>
         </div>
-        <button type="button" onClick={validate}>
+        <button type="button" onClick={validate} className="rounded-full border border-primary-400/40 bg-primary-500/90 px-5 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-primary-500/20 transition hover:bg-primary-400">
           Validate deck
         </button>
       </header>
 
-      <div className="space-y-4">
-        <div className="flex flex-col gap-4 md:flex-row">
-          <div className="flex-1 space-y-2">
-            <label>Deck name</label>
+      <div className="space-y-5">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px]">
+          <div className="workspace-panel__section space-y-3">
+            <div className="space-y-1">
+              <label>Deck name</label>
+              <p className="text-xs text-slate-500">Displayed on exports and deck registries.</p>
+            </div>
             <input
               value={deck.name}
               onChange={(event) => setDeck((prev) => ({ ...prev, name: event.target.value }))}
               placeholder="e.g. Aether Rush"
             />
           </div>
-          <div className="w-full space-y-2 md:w-48">
-            <label>Format</label>
+          <div className="workspace-panel__section space-y-3">
+            <div className="space-y-1">
+              <label>Format</label>
+              <p className="text-xs text-slate-500">Applies legality checks to the card pool.</p>
+            </div>
             <select
               value={deck.format}
               onChange={(event) => setDeck((prev) => ({ ...prev, format: event.target.value as DeckFormValues["format"] }))}
@@ -96,9 +102,12 @@ export function DeckBuilder() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/5 bg-slate-950/70 p-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">Add card</h3>
-          <div className="mt-3 flex flex-col gap-3 lg:flex-row">
+        <div className="workspace-panel__section space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-200">Add card</h3>
+            <span className="text-[11px] uppercase text-slate-500">Library size: {MOCK_LIBRARY.length}</span>
+          </div>
+          <div className="flex flex-col gap-3 lg:flex-row">
             <div className="flex flex-1 flex-col gap-2">
               <label>Card</label>
               <select value={cardId} onChange={(event) => setCardId(event.target.value)} className="bg-slate-900">
@@ -126,21 +135,21 @@ export function DeckBuilder() {
                 }}
               />
             </div>
-            <button type="button" onClick={addCardToDeck} className="lg:w-44">
+            <button type="button" onClick={addCardToDeck} className="lg:w-40">
               <PlusIcon className="mr-2 h-4 w-4" />
               Add card
             </button>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/5 bg-slate-950/70 p-4">
+        <div className="workspace-panel__section space-y-4">
           <header className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-200">
               Card list ({totalCards} cards)
             </h3>
             <span className="text-xs text-slate-500">Max 60 cards</span>
           </header>
-          <ul className="mt-3 space-y-2 text-sm text-slate-200">
+          <ul className="space-y-2 text-sm text-slate-200">
             {deck.cards.length === 0 ? (
               <li className="text-xs text-slate-500">No cards have been added yet.</li>
             ) : (
@@ -159,7 +168,7 @@ export function DeckBuilder() {
                       <button
                         type="button"
                         onClick={() => removeCard(entry.cardId)}
-                        className="text-xs text-rose-300 hover:text-rose-200"
+                        className="text-xs text-rose-300 transition hover:text-rose-200"
                       >
                         Remove
                       </button>

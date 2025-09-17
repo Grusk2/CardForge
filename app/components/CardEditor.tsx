@@ -93,172 +93,222 @@ export function CardEditor({ onChange }: CardEditorProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 shadow-xl">
-        <header className="mb-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-semibold text-white">Card Editor</h2>
-            <p className="text-sm text-slate-400">
-              Enter card details and get live validation based on the game rules.
-            </p>
-          </div>
-          <button type="button" onClick={handleValidate} className="bg-primary-500 px-4 py-2 text-sm font-semibold">
-            Validate card
-          </button>
-        </header>
+    <section className="workspace-panel space-y-8">
+      <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h2 className="text-2xl font-semibold text-white">Card Editor</h2>
+          <p className="text-sm text-slate-400">
+            Tune every attribute and validate the configuration before committing to a print run.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={handleValidate}
+          className="rounded-full border border-primary-400/40 bg-primary-500/90 px-5 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-primary-500/20 transition hover:bg-primary-400"
+        >
+          Validate card
+        </button>
+      </header>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <Field label="Name" error={errors.name}>
-            <input
-              name="name"
-              value={values.name}
-              onChange={(event) => handleChange("name", event.target.value)}
-              placeholder="e.g. Starwanderer"
-            />
-          </Field>
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] xl:gap-8">
+        <div className="space-y-5">
+          <Section title="Card identity" description="Essential details that appear in search results and deck lists.">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Name" error={errors.name} className="sm:col-span-2">
+                <input
+                  name="name"
+                  value={values.name}
+                  onChange={(event) => handleChange("name", event.target.value)}
+                  placeholder="e.g. Starwanderer"
+                />
+              </Field>
 
-          <Field label="Cost" error={errors.cost}>
-            <input
-              type="number"
-              name="cost"
-              min={0}
-              max={15}
-              value={values.cost}
-              onChange={(event) => {
-                const value = Number(event.target.value);
-                handleChange("cost", Number.isNaN(value) ? 0 : value);
-              }}
-            />
-          </Field>
+              <Field label="Cost" error={errors.cost}>
+                <input
+                  type="number"
+                  name="cost"
+                  min={0}
+                  max={15}
+                  value={values.cost}
+                  onChange={(event) => {
+                    const value = Number(event.target.value);
+                    handleChange("cost", Number.isNaN(value) ? 0 : value);
+                  }}
+                />
+              </Field>
 
-          <Field label="Card type" error={errors.type}>
-            <select
-              value={values.type}
-              onChange={(event) => handleChange("type", event.target.value as CardFormValues["type"])}
-            >
-              <option value="Creature">Creature</option>
-              <option value="Spell">Spell</option>
-              <option value="Artifact">Artifact</option>
-              <option value="Hero">Hero</option>
-            </select>
-          </Field>
+              <Field label="Card type" error={errors.type}>
+                <select
+                  value={values.type}
+                  onChange={(event) => handleChange("type", event.target.value as CardFormValues["type"])}
+                >
+                  <option value="Creature">Creature</option>
+                  <option value="Spell">Spell</option>
+                  <option value="Artifact">Artifact</option>
+                  <option value="Hero">Hero</option>
+                </select>
+              </Field>
 
-          <Field label="Rarity" error={errors.rarity}>
-            <select
-              value={values.rarity}
-              onChange={(event) => handleChange("rarity", event.target.value as CardFormValues["rarity"])}
-            >
-              <option value="Common">Common</option>
-              <option value="Uncommon">Uncommon</option>
-              <option value="Rare">Rare</option>
-              <option value="Mythic">Mythic</option>
-            </select>
-          </Field>
+              <Field label="Rarity" error={errors.rarity}>
+                <select
+                  value={values.rarity}
+                  onChange={(event) => handleChange("rarity", event.target.value as CardFormValues["rarity"])}
+                >
+                  <option value="Common">Common</option>
+                  <option value="Uncommon">Uncommon</option>
+                  <option value="Rare">Rare</option>
+                  <option value="Mythic">Mythic</option>
+                </select>
+              </Field>
 
-          <Field label="Set ID" error={errors.setId}>
-            <input
-              name="setId"
-              value={values.setId}
-              onChange={(event) => handleChange("setId", event.target.value)}
-            />
-          </Field>
+              <Field label="Set ID" error={errors.setId}>
+                <input
+                  name="setId"
+                  value={values.setId}
+                  onChange={(event) => handleChange("setId", event.target.value)}
+                />
+              </Field>
 
-          <Field label="Expansion" error={errors.expansion}>
-            <input
-              name="expansion"
-              value={values.expansion}
-              onChange={(event) => handleChange("expansion", event.target.value)}
-            />
-          </Field>
+              <Field label="Expansion" error={errors.expansion}>
+                <input
+                  name="expansion"
+                  value={values.expansion}
+                  onChange={(event) => handleChange("expansion", event.target.value)}
+                />
+              </Field>
 
-          <Field label="Version" error={errors.version}>
-            <input
-              name="version"
-              value={values.version}
-              onChange={(event) => handleChange("version", event.target.value)}
-            />
-          </Field>
+              <Field label="Version" error={errors.version}>
+                <input
+                  name="version"
+                  value={values.version}
+                  onChange={(event) => handleChange("version", event.target.value)}
+                />
+              </Field>
+            </div>
+          </Section>
 
-          <Field label="Image URL" error={errors.imageUrl}>
-            <input
-              name="imageUrl"
-              value={values.imageUrl}
-              onChange={(event) => handleChange("imageUrl", event.target.value)}
-              placeholder="https://"
-            />
-          </Field>
+          <Section title="Artwork & lore" description="Control how the card presents itself visually and narratively.">
+            <div className="grid gap-4">
+              <Field label="Image URL" error={errors.imageUrl}>
+                <input
+                  name="imageUrl"
+                  value={values.imageUrl}
+                  onChange={(event) => handleChange("imageUrl", event.target.value)}
+                  placeholder="https://"
+                />
+              </Field>
 
-          <Field label="Attack" error={errors["stats.attack"]}>
-            <input
-              type="number"
-              min={0}
-              max={20}
-              value={values.stats.attack}
-              onChange={(event) => handleStatChange("attack", Number(event.target.value))}
-            />
-          </Field>
-
-          <Field label="Health" error={errors["stats.health"]}>
-            <input
-              type="number"
-              min={1}
-              max={25}
-              value={values.stats.health}
-              onChange={(event) => handleStatChange("health", Number(event.target.value))}
-            />
-          </Field>
-
-          <Field label="Armor" error={errors["stats.armor"]}>
-            <input
-              type="number"
-              min={0}
-              max={10}
-              value={values.stats.armor ?? 0}
-              onChange={(event) => handleStatChange("armor", Number(event.target.value))}
-            />
-          </Field>
+              <Field label="Rules text" error={errors.text}>
+                <textarea
+                  rows={5}
+                  value={values.text}
+                  onChange={(event) => handleChange("text", event.target.value)}
+                  placeholder={"Describe the card effect and any special rules."}
+                />
+              </Field>
+            </div>
+          </Section>
         </div>
 
-        <Field label="Rules text" error={errors.text}>
-          <textarea
-            rows={4}
-            value={values.text}
-            onChange={(event) => handleChange("text", event.target.value)}
-            placeholder={"Describe the card effect and any special rules."}
-          />
-        </Field>
+        <div className="space-y-5">
+          <Section title="Combat profile" description="Balance the numbers to match the intended power curve.">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <Field label="Attack" error={errors["stats.attack"]}>
+                <input
+                  type="number"
+                  min={0}
+                  max={20}
+                  value={values.stats.attack}
+                  onChange={(event) => handleStatChange("attack", Number(event.target.value))}
+                />
+              </Field>
 
-        <div className="space-y-2">
-          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Keywords</label>
-          <KeywordSelector
-            selectedKeywords={values.keywords}
-            onAddKeyword={addKeyword}
-            onRemoveKeyword={removeKeyword}
-            query={keywordQuery}
-            onQueryChange={setKeywordQuery}
-            suggestions={filteredKeywords}
-          />
-          {errors.keywords ? <p className="text-sm text-rose-400">{errors.keywords}</p> : null}
+              <Field label="Health" error={errors["stats.health"]}>
+                <input
+                  type="number"
+                  min={1}
+                  max={25}
+                  value={values.stats.health}
+                  onChange={(event) => handleStatChange("health", Number(event.target.value))}
+                />
+              </Field>
+
+              <Field label="Armor" error={errors["stats.armor"]}>
+                <input
+                  type="number"
+                  min={0}
+                  max={10}
+                  value={values.stats.armor ?? 0}
+                  onChange={(event) => handleStatChange("armor", Number(event.target.value))}
+                />
+              </Field>
+            </div>
+          </Section>
+
+          <Section
+            title="Keywords"
+            description="Attach mechanics and ability words to surface core interactions."
+            variant="muted"
+          >
+            <KeywordSelector
+              selectedKeywords={values.keywords}
+              onAddKeyword={addKeyword}
+              onRemoveKeyword={removeKeyword}
+              query={keywordQuery}
+              onQueryChange={setKeywordQuery}
+              suggestions={filteredKeywords}
+            />
+            {errors.keywords ? <p className="text-sm text-rose-400">{errors.keywords}</p> : null}
+          </Section>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
 function Field({
   label,
   error,
-  children
+  children,
+  className
 }: {
   label: string;
   error?: string;
   children: ReactNode;
+  className?: string;
 }) {
   return (
-    <div className="space-y-2">
+    <div className={clsx("space-y-2", className)}>
       <label>{label}</label>
       {children}
       {error ? <p className="text-sm text-rose-400">{error}</p> : null}
+    </div>
+  );
+}
+
+function Section({
+  title,
+  description,
+  children,
+  variant = "default"
+}: {
+  title: string;
+  description: string;
+  children: ReactNode;
+  variant?: "default" | "muted";
+}) {
+  return (
+    <div
+      className={clsx(
+        "workspace-panel__section space-y-4",
+        variant === "muted" && "workspace-panel__section--muted"
+      )}
+    >
+      <div className="space-y-1">
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-200">{title}</h3>
+        <p className="text-xs text-slate-500">{description}</p>
+      </div>
+      {children}
     </div>
   );
 }
@@ -281,7 +331,7 @@ function KeywordSelector({
   onRemoveKeyword
 }: KeywordSelectorProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+    <div className="flex flex-col gap-4">
       <Combobox value={query} onChange={onAddKeyword}>
         <div className="relative">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left shadow-md focus:outline-none">
