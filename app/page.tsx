@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import clsx from "classnames";
+
 import { CardEditor } from "@/app/components/CardEditor";
 import { CardPreview } from "@/app/components/CardPreview";
 import { DeckBuilder } from "@/app/components/DeckBuilder";
@@ -22,54 +24,186 @@ const initialCard: CardFormValues = {
   version: "v1.0.0"
 };
 
+type WorkspaceId = "card-editor" | "deck-check" | "export" | "keyword";
+
+const WORKSPACES: Array<{
+  id: WorkspaceId;
+  label: string;
+  description: string;
+}> = [
+  {
+    id: "card-editor",
+    label: "Card Editor",
+    description: "Design and validate individual cards"
+  },
+  {
+    id: "deck-check",
+    label: "Deck Check",
+    description: "Assemble decks and confirm legality"
+  },
+  {
+    id: "export",
+    label: "Export",
+    description: "Package cards for sharing"
+  },
+  {
+    id: "keyword",
+    label: "Keyword",
+    description: "Manage shared terminology"
+  }
+];
+
 export default function HomePage() {
   const [card, setCard] = useState<CardFormValues>(initialCard);
+  const [activeWorkspace, setActiveWorkspace] = useState<WorkspaceId>("card-editor");
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
+
+    const stored = window.localStorage.getItem("cardforge-theme");
+    if (stored === "light" || stored === "dark") {
+      return stored;
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  });
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const settingsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem("cardforge-theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    if (!isSettingsOpen) return;
+    function handleClick(event: MouseEvent) {
+      if (!settingsRef.current?.contains(event.target as Node)) {
+        setIsSettingsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [isSettingsOpen]);
+
+  function handleWorkspaceSelect(workspaceId: WorkspaceId) {
+    setActiveWorkspace(workspaceId);
+    setIsSettingsOpen(false);
+  }
+
+  function toggleTheme() {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  }
 
   return (
-    <main className="workspace-shell">
-      <div className="space-y-10">
-        <header className="dashboard-header">
-          <div className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary-200">Design &amp; Validation Hub</p>
-            <div className="space-y-2">
-              <h1 className="text-4xl font-semibold text-white sm:text-5xl">CardForge</h1>
-              <p className="max-w-3xl text-base text-slate-300">
-                Det kompletta gränssnittet för att bygga kort, kontrollera lekar och hålla ordning på nyckelord – allt i
-                en arbetsvy anpassad för både prototypande och turneringsförberedelser.
-              </p>
+    <main className="flex min-h-screen flex-col text-slate-900 transition-colors dark:text-slate-100 lg:flex-row">
+      <aside className="relative z-10 flex w-full flex-col justify-between gap-8 border-b border-slate-300/60 bg-white/80 px-6 py-6 shadow-sm backdrop-blur-lg transition dark:border-slate-700/80 dark:bg-slate-900/70 dark:shadow-black/30 sm:px-8 lg:h-screen lg:w-80 lg:border-b-0 lg:border-r lg:px-8 lg:py-12 lg:shadow-md xl:gap-10 2xl:w-[24rem] 2xl:px-10 2xl:py-16">
+        <div className="space-y-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-lg font-semibold text-white dark:bg-slate-700">
+              PFP
+            </span>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Workspace</p>
+              <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">CardForge</h1>
             </div>
           </div>
-          <dl className="dashboard-metrics">
-            <div>
-              <dt>Validator</dt>
-              <dd>Zod-powered schemas</dd>
-            </div>
-            <div>
-              <dt>Nyckelord</dt>
-              <dd>Delat bibliotek</dd>
-            </div>
-            <div>
-              <dt>Formatstöd</dt>
-              <dd>Standard &amp; Unlimited</dd>
-            </div>
-            <div>
-              <dt>Export</dt>
-              <dd>JSON · PNG · PDF</dd>
-            </div>
-          </dl>
-        </header>
 
-        <section className="dashboard-grid">
-          <div className="space-y-8">
-            <CardEditor onChange={setCard} />
-            <DeckBuilder />
-          </div>
-          <div className="space-y-8">
+          <nav className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:gap-3 2xl:gap-4">
+            {WORKSPACES.map((workspace) => (
+              <button
+                key={workspace.id}
+                type="button"
+                onClick={() => handleWorkspaceSelect(workspace.id)}
+                className={clsx(
+                  "flex w-full items-center gap-4 rounded-2xl px-4 py-4 text-left transition focus-visible:outline-none",
+                  activeWorkspace === workspace.id
+                    ? "bg-primary-500 text-white shadow-lg shadow-primary-200/60 dark:bg-primary-600 dark:shadow-primary-900/40"
+                    : "text-slate-600 hover:bg-white/70 dark:text-slate-300 dark:hover:bg-slate-800/80"
+                )}
+              >
+                <span
+                  className={clsx(
+                    "flex h-11 w-11 items-center justify-center rounded-full border text-sm font-semibold transition",
+                    activeWorkspace === workspace.id
+                      ? "border-white/60 bg-white/20 text-white"
+                      : "border-slate-300 bg-white text-slate-600 dark:border-slate-600 dark:bg-slate-900/60 dark:text-slate-300"
+                  )}
+                >
+                  {workspace.label
+                    .split(" ")
+                    .map((word) => word[0])
+                    .join("")}
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{workspace.label}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {workspace.description}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        <div ref={settingsRef} className="relative">
+          <button
+            type="button"
+            onClick={() => setIsSettingsOpen((prev) => !prev)}
+            className="flex w-full items-center gap-4 rounded-2xl px-4 py-4 text-sm font-semibold text-slate-600 transition hover:bg-white/70 dark:text-slate-300 dark:hover:bg-slate-800/80"
+          >
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-xs font-semibold uppercase tracking-wider text-slate-600 dark:border-slate-600 dark:bg-slate-900/70 dark:text-slate-300">
+              ⚙️
+            </span>
+            Settings
+          </button>
+
+          {isSettingsOpen ? (
+            <div className="absolute bottom-16 left-0 right-0 z-20 space-y-4 rounded-2xl border border-slate-200 bg-white/95 p-4 text-sm shadow-xl dark:border-slate-700 dark:bg-slate-900/95">
+              <div className="space-y-1">
+                <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">Appearance</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Toggle CardForge between light and dark surfaces to suit your environment.
+                </p>
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{theme === "dark" ? "Dark mode" : "Light mode"}</span>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  aria-label="Toggle dark mode"
+                  aria-pressed={theme === "dark"}
+                  className={clsx(
+                    "flex h-9 w-16 items-center rounded-full px-1 transition focus-visible:outline focus-visible:outline-primary-400",
+                    theme === "dark" ? "justify-end bg-primary-500" : "justify-start bg-slate-300"
+                  )}
+                >
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-base shadow-sm">
+                    {theme === "dark" ? "🌙" : "☀️"}
+                  </span>
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </aside>
+
+      <div className="flex flex-1 justify-center px-4 py-8 sm:px-6 lg:px-12 lg:py-12 2xl:px-16 2xl:py-16">
+        <div className="flex w-full max-w-5xl flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-12 xl:max-w-[1400px] 2xl:max-w-[1600px] 2xl:gap-16">
+          <section className="flex min-w-0 flex-[1.7] flex-col gap-6 2xl:gap-8">
+            {activeWorkspace === "card-editor" ? <CardEditor onChange={setCard} /> : null}
+            {activeWorkspace === "deck-check" ? <DeckBuilder /> : null}
+            {activeWorkspace === "export" ? <ExportPanel card={card} /> : null}
+            {activeWorkspace === "keyword" ? <KeywordManager /> : null}
+          </section>
+
+          <section className="flex w-full shrink-0 items-center justify-center lg:w-auto lg:min-w-[340px] lg:justify-end lg:self-center xl:min-w-[380px] 2xl:min-w-[420px] 2xl:pt-4">
             <CardPreview card={card} />
-            <ExportPanel card={card} />
-            <KeywordManager />
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
     </main>
   );
