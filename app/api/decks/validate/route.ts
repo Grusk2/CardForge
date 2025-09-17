@@ -7,10 +7,10 @@ export async function POST(request: Request) {
 
   if (!parsed.success) {
     return NextResponse.json(
-      { message: "Leken misslyckades med validering", issues: parsed.error.issues },
+      { message: "Deck validation failed", issues: parsed.error.issues },
       { status: 422 }
     );
   }
 
-  return NextResponse.json({ message: "Leken är giltig" });
+  return NextResponse.json({ message: "The deck is valid" });
 }

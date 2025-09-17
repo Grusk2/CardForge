@@ -3,12 +3,12 @@ import type { CardFormValues, DeckFormValues } from "./types";
 
 export const cardSchema = z
   .object({
-    name: z.string().min(3, "Namnet måste vara minst 3 tecken."),
+    name: z.string().min(3, "Name must be at least 3 characters."),
     cost: z.number().int().min(0).max(15),
     type: z.enum(["Creature", "Spell", "Artifact", "Hero"]),
     rarity: z.enum(["Common", "Uncommon", "Rare", "Mythic"]),
     text: z.string().max(800).optional().default(""),
-    imageUrl: z.string().url("Ogiltig bildadress."),
+    imageUrl: z.string().url("Invalid image URL."),
     stats: z.object({
       attack: z.number().int().min(0).max(20),
       health: z.number().int().min(1).max(25),
@@ -17,7 +17,7 @@ export const cardSchema = z
     keywords: z.array(z.string()).max(6),
     setId: z.string().min(2),
     expansion: z.string().min(2),
-    version: z.string().regex(/^v\d+\.\d+\.\d+$/, "Version måste följa formatet vX.Y.Z"),
+    version: z.string().regex(/^v\d+\.\d+\.\d+$/, "Version must follow the format vX.Y.Z"),
     createdAt: z.date().optional(),
     updatedAt: z.date().optional()
   })
@@ -25,14 +25,14 @@ export const cardSchema = z
     if (data.type === "Creature" && data.stats.attack === 0) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Varelser bör ha minst 1 attack.",
+        message: "Creatures should have at least 1 attack.",
         path: ["stats", "attack"]
       });
     }
     if (data.keywords.includes("Berserk") && data.stats.health < 2) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Berserk kräver minst 2 liv.",
+        message: "Berserk requires at least 2 health.",
         path: ["stats", "health"]
       });
     }
@@ -52,7 +52,7 @@ export const deckSchema = z
       .max(60)
   })
   .refine((deck) => deck.cards.reduce((sum, card) => sum + card.quantity, 0) >= 40, {
-    message: "Leken måste innehålla minst 40 kort.",
+    message: "The deck must contain at least 40 cards.",
     path: ["cards"]
   })
   .superRefine((deck, ctx) => {
@@ -62,7 +62,7 @@ export const deckSchema = z
         duplicates.forEach((entry, index) => {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "Standard-format tillåter max 3 kopior av samma kort.",
+            message: "The Standard format allows a maximum of 3 copies of the same card.",
             path: ["cards", index, "quantity"]
           });
         });

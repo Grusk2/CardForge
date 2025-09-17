@@ -19,10 +19,10 @@ export function ExportPanel({ card }: ExportPanelProps) {
         downloadFile("card.json", jsonPreview);
         break;
       case "png":
-        alert("PNG-export kräver serverrendering av kortlayout. Stub implementerad för prototyp.");
+        alert("PNG export requires server-side rendering of the card layout. Stub implemented for the prototype.");
         break;
       case "pdf":
-        alert("PDF-export bygger på framtida print-and-play generator.");
+        alert("PDF export will rely on a future print-and-play generator.");
         break;
     }
   }
@@ -33,12 +33,12 @@ export function ExportPanel({ card }: ExportPanelProps) {
         <div>
           <h2 className="text-xl font-semibold text-white">Export</h2>
           <p className="text-sm text-slate-400">
-            Ladda ner kortdata i olika format för integration eller utskrift.
+            Download card data in multiple formats for integration or printing.
           </p>
         </div>
         <button type="button" onClick={handleExport}>
           <DocumentArrowDownIcon className="mr-2 h-5 w-5" />
-          Exportera {format.toUpperCase()}
+          Export {format.toUpperCase()}
         </button>
       </header>
 
@@ -52,7 +52,7 @@ export function ExportPanel({ card }: ExportPanelProps) {
           </select>
         </div>
         <div className="flex-1">
-          <label>Förhandsgranskning (JSON)</label>
+          <label>Preview (JSON)</label>
           <pre className="mt-2 h-64 overflow-auto rounded-2xl border border-white/5 bg-slate-950/70 p-4 text-xs text-slate-200">
             {jsonPreview}
           </pre>
