@@ -96,15 +96,15 @@ export function CardEditor({ onChange }: CardEditorProps) {
     <section className="workspace-panel space-y-8">
       <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-white">Card Editor</h2>
-          <p className="text-sm text-slate-400">
+          <h2 className="text-2xl font-semibold text-slate-900">Card Editor</h2>
+          <p className="text-sm text-slate-600">
             Tune every attribute and validate the configuration before committing to a print run.
           </p>
         </div>
         <button
           type="button"
           onClick={handleValidate}
-          className="rounded-full border border-primary-400/40 bg-primary-500/90 px-5 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-primary-500/20 transition hover:bg-primary-400"
+          className="rounded-full border border-primary-200 bg-primary-500 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-400"
         >
           Validate card
         </button>
@@ -258,7 +258,7 @@ export function CardEditor({ onChange }: CardEditorProps) {
               onQueryChange={setKeywordQuery}
               suggestions={filteredKeywords}
             />
-            {errors.keywords ? <p className="text-sm text-rose-400">{errors.keywords}</p> : null}
+            {errors.keywords ? <p className="text-sm text-rose-500">{errors.keywords}</p> : null}
           </Section>
         </div>
       </div>
@@ -279,9 +279,11 @@ function Field({
 }) {
   return (
     <div className={clsx("space-y-2", className)}>
-      <label>{label}</label>
+      <div className="flex items-center justify-between">
+        <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</label>
+        {error ? <span className="text-xs text-rose-500">{error}</span> : null}
+      </div>
       {children}
-      {error ? <p className="text-sm text-rose-400">{error}</p> : null}
     </div>
   );
 }
@@ -305,7 +307,7 @@ function Section({
       )}
     >
       <div className="space-y-1">
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-200">{title}</h3>
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700">{title}</h3>
         <p className="text-xs text-slate-500">{description}</p>
       </div>
       {children}
@@ -334,9 +336,9 @@ function KeywordSelector({
     <div className="flex flex-col gap-4">
       <Combobox value={query} onChange={onAddKeyword}>
         <div className="relative">
-          <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left shadow-md focus:outline-none">
+          <div className="relative w-full cursor-default overflow-hidden rounded-xl border border-slate-300 bg-white text-left shadow-sm focus-within:border-primary-300 focus-within:ring-2 focus-within:ring-primary-100">
             <Combobox.Input
-              className="w-full border border-slate-700 bg-slate-900 py-2 pl-3 pr-10 text-sm leading-5 text-slate-100"
+              className="w-full bg-transparent py-2 pl-3 pr-10 text-sm leading-5 text-slate-900 focus:outline-none"
               displayValue={() => query}
               onChange={(event) => onQueryChange(event.target.value)}
               placeholder="Search keywords"
@@ -346,7 +348,7 @@ function KeywordSelector({
             </Combobox.Button>
           </div>
           {suggestions.length > 0 ? (
-            <Combobox.Options className="absolute z-10 mt-1 max-h-40 w-full overflow-auto rounded-md bg-slate-900 py-1 text-sm shadow-lg ring-1 ring-black/5">
+            <Combobox.Options className="absolute z-10 mt-1 max-h-40 w-full overflow-auto rounded-xl border border-slate-200 bg-white py-1 text-sm shadow-lg">
               {suggestions.map((keyword) => (
                 <Combobox.Option
                   key={keyword}
@@ -354,7 +356,7 @@ function KeywordSelector({
                   className={({ active }) =>
                     clsx(
                       "relative cursor-default select-none py-2 pl-8 pr-4",
-                      active ? "bg-primary-600 text-white" : "text-slate-100"
+                      active ? "bg-primary-50 text-primary-600" : "text-slate-700"
                     )
                   }
                 >
@@ -362,7 +364,7 @@ function KeywordSelector({
                     <>
                       <span className="block truncate">{keyword}</span>
                       {active ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-white">
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-primary-500">
                           <CheckIcon className="h-5 w-5" aria-hidden="true" />
                         </span>
                       ) : null}
@@ -379,13 +381,13 @@ function KeywordSelector({
         {selectedKeywords.map((keyword) => (
           <span
             key={keyword}
-            className="inline-flex items-center gap-2 rounded-full bg-primary-500/20 px-3 py-1 text-xs font-medium text-primary-200"
+            className="inline-flex items-center gap-2 rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary-700"
           >
             {keyword}
             <button
               type="button"
               onClick={() => onRemoveKeyword(keyword)}
-              className="rounded-full bg-primary-500/30 p-0.5 text-primary-100 hover:bg-primary-500/60"
+              className="rounded-full bg-primary-200/80 p-0.5 text-primary-700 hover:bg-primary-300"
             >
               <XMarkIcon className="h-3 w-3" />
             </button>
@@ -394,7 +396,7 @@ function KeywordSelector({
         <button
           type="button"
           onClick={() => (query ? onAddKeyword(query) : null)}
-          className="inline-flex items-center gap-1 text-xs font-medium text-primary-300"
+          className="inline-flex items-center gap-1 text-xs font-medium text-primary-600"
         >
           <PlusIcon className="h-4 w-4" />
           Add keyword

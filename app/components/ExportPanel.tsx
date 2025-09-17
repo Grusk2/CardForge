@@ -31,15 +31,15 @@ export function ExportPanel({ card }: ExportPanelProps) {
     <section className="workspace-panel space-y-6">
       <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold text-white">Export Toolkit</h2>
-          <p className="text-sm text-slate-400">
+          <h2 className="text-2xl font-semibold text-slate-900">Export Toolkit</h2>
+          <p className="text-sm text-slate-600">
             Package the current card as structured data or production-ready assets.
           </p>
         </div>
         <button
           type="button"
           onClick={handleExport}
-          className="inline-flex items-center gap-2 rounded-full border border-primary-400/40 bg-primary-500/90 px-5 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-primary-500/25 transition hover:bg-primary-400"
+          className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-500 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-400"
         >
           <DocumentArrowDownIcon className="h-5 w-5" />
           Export {format.toUpperCase()}
@@ -49,13 +49,13 @@ export function ExportPanel({ card }: ExportPanelProps) {
       <div className="grid gap-4 lg:grid-cols-[minmax(0,180px)_1fr] lg:items-start">
         <div className="space-y-3">
           <div className="space-y-1">
-            <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Format</label>
+            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Format</label>
             <p className="text-xs text-slate-500">Choose the pipeline destination.</p>
           </div>
           <select
             value={format}
             onChange={(event) => setFormat(event.target.value as typeof format)}
-            className="rounded-2xl border border-white/10 bg-slate-950/70 px-3 py-2 text-sm text-slate-200 shadow-inner focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400/30"
+            className="rounded-2xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-inner focus:border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-200"
           >
             <option value="json">JSON</option>
             <option value="png">PNG</option>
@@ -64,10 +64,10 @@ export function ExportPanel({ card }: ExportPanelProps) {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Preview</label>
+            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Preview</label>
             <span className="text-[11px] uppercase text-slate-500">Read-only</span>
           </div>
-          <pre className="h-64 w-full overflow-auto rounded-2xl border border-white/5 bg-slate-950/70 p-4 font-mono text-xs text-slate-200">
+          <pre className="h-64 w-full overflow-auto rounded-2xl border border-slate-200 bg-slate-50 p-4 font-mono text-xs text-slate-700">
             {jsonPreview}
           </pre>
         </div>

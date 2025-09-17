@@ -64,12 +64,16 @@ export function DeckBuilder() {
     <section className="workspace-panel space-y-6">
       <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-white">Deck Check</h2>
-          <p className="text-sm text-slate-400">
+          <h2 className="text-2xl font-semibold text-slate-900">Deck Check</h2>
+          <p className="text-sm text-slate-600">
             Assemble a list and verify format constraints before locking a tournament build.
           </p>
         </div>
-        <button type="button" onClick={validate} className="rounded-full border border-primary-400/40 bg-primary-500/90 px-5 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-primary-500/20 transition hover:bg-primary-400">
+        <button
+          type="button"
+          onClick={validate}
+          className="rounded-full border border-primary-200 bg-primary-500 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-400"
+        >
           Validate deck
         </button>
       </header>
@@ -104,13 +108,13 @@ export function DeckBuilder() {
 
         <div className="workspace-panel__section space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-200">Add card</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700">Add card</h3>
             <span className="text-[11px] uppercase text-slate-500">Library size: {MOCK_LIBRARY.length}</span>
           </div>
           <div className="flex flex-col gap-3 lg:flex-row">
             <div className="flex flex-1 flex-col gap-2">
               <label>Card</label>
-              <select value={cardId} onChange={(event) => setCardId(event.target.value)} className="bg-slate-900">
+              <select value={cardId} onChange={(event) => setCardId(event.target.value)}>
                 {MOCK_LIBRARY.map((card) => (
                   <option key={card.id} value={card.id}>
                     {card.name} – {card.type}
@@ -144,31 +148,31 @@ export function DeckBuilder() {
 
         <div className="workspace-panel__section space-y-4">
           <header className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-200">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-700">
               Card list ({totalCards} cards)
             </h3>
             <span className="text-xs text-slate-500">Max 60 cards</span>
           </header>
-          <ul className="space-y-2 text-sm text-slate-200">
+          <ul className="space-y-2 text-sm text-slate-700">
             {deck.cards.length === 0 ? (
               <li className="text-xs text-slate-500">No cards have been added yet.</li>
             ) : (
               deck.cards.map((entry) => {
                 const card = MOCK_LIBRARY.find((item) => item.id === entry.cardId);
                 return (
-                  <li key={entry.cardId} className="flex items-center justify-between rounded-xl bg-slate-900/70 px-3 py-2">
+                  <li key={entry.cardId} className="flex items-center justify-between rounded-xl bg-slate-100 px-3 py-2">
                     <div>
-                      <p className="font-medium text-slate-100">{card?.name ?? entry.cardId}</p>
+                      <p className="font-medium text-slate-900">{card?.name ?? entry.cardId}</p>
                       <p className="text-xs text-slate-500">
                         {card?.type ?? "Unknown type"} • {card?.rarity ?? "?"}
                       </p>
                     </div>
                     <div className="flex items-center gap-4 text-sm">
-                      <span className="badge bg-primary-500/20 text-primary-200">x{entry.quantity}</span>
+                      <span className="rounded-full bg-primary-100 px-2.5 py-1 text-xs font-semibold text-primary-600">x{entry.quantity}</span>
                       <button
                         type="button"
                         onClick={() => removeCard(entry.cardId)}
-                        className="text-xs text-rose-300 transition hover:text-rose-200"
+                        className="text-xs text-rose-500 transition hover:text-rose-400"
                       >
                         Remove
                       </button>
@@ -181,13 +185,13 @@ export function DeckBuilder() {
         </div>
 
         {validationMessage ? (
-          <div className="rounded-xl border border-emerald-500/40 bg-emerald-500/10 p-4 text-sm text-emerald-200">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
             {validationMessage}
           </div>
         ) : null}
 
         {errors.length > 0 ? (
-          <div className="rounded-xl border border-rose-500/40 bg-rose-500/10 p-4 text-sm text-rose-200">
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-600">
             <ul className="list-inside list-disc space-y-1">
               {errors.map((error, index) => (
                 <li key={`${error}-${index}`}>{error}</li>
