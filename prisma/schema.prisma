@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Card {
+  id         String   @id @default(cuid())
+  name       String
+  cost       Int
+  type       String
+  rarity     String
+  text       String
+  imageUrl   String
+  attack     Int
+  health     Int
+  armor      Int      @default(0)
+  keywords   CardKeyword[]
+  set        CardSet  @relation(fields: [setId], references: [id])
+  setId      String
+  expansion  String
+  version    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model CardKeyword {
+  card     Card   @relation(fields: [cardId], references: [id])
+  cardId   String
+  keyword  Keyword @relation(fields: [keywordId], references: [id])
+  keywordId String
+
+  @@id([cardId, keywordId])
+}
+
+model Keyword {
+  id    String  @id @default(cuid())
+  name  String  @unique
+  cards CardKeyword[]
+  group String?
+}
+
+model CardSet {
+  id        String @id @default(cuid())
+  code      String @unique
+  name      String
+  version   String
+  cards     Card[]
+  createdAt DateTime @default(now())
+}
+
+model Deck {
+  id        String      @id @default(cuid())
+  name      String
+  format    String
+  cards     DeckCard[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model DeckCard {
+  deck    Deck   @relation(fields: [deckId], references: [id])
+  deckId  String
+  card    Card   @relation(fields: [cardId], references: [id])
+  cardId  String
+  copies  Int
+
+  @@id([deckId, cardId])
+}
