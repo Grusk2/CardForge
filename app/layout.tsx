@@ -5,9 +5,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CardForge – Kortspelsbyggare",
-  description:
-    "Bygg, hantera och validera kort för egna kortspel med CardForge."
+  title: "CardForge – Card Game Builder",
+  description: "Build, manage, and validate custom trading cards with CardForge."
 };
 
 export default function RootLayout({
@@ -16,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="sv" className="bg-slate-950">
+    <html lang="en" className="bg-slate-950">
       <body className={inter.className}>{children}</body>
     </html>
   );

@@ -97,27 +97,27 @@ export function CardEditor({ onChange }: CardEditorProps) {
       <div className="rounded-3xl border border-white/10 bg-slate-900/60 p-6 shadow-xl">
         <header className="mb-6 flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-white">Korteditor</h2>
+            <h2 className="text-xl font-semibold text-white">Card Editor</h2>
             <p className="text-sm text-slate-400">
-              Ange kortdetaljer och få live-validering enligt spelreglerna.
+              Enter card details and get live validation based on the game rules.
             </p>
           </div>
           <button type="button" onClick={handleValidate} className="bg-primary-500 px-4 py-2 text-sm font-semibold">
-            Validera kort
+            Validate card
           </button>
         </header>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <Field label="Namn" error={errors.name}>
+          <Field label="Name" error={errors.name}>
             <input
               name="name"
               value={values.name}
               onChange={(event) => handleChange("name", event.target.value)}
-              placeholder="Ex. Stjärnvandrare"
+              placeholder="e.g. Starwanderer"
             />
           </Field>
 
-          <Field label="Kostnad" error={errors.cost}>
+          <Field label="Cost" error={errors.cost}>
             <input
               type="number"
               name="cost"
@@ -131,16 +131,19 @@ export function CardEditor({ onChange }: CardEditorProps) {
             />
           </Field>
 
-          <Field label="Korttyp" error={errors.type}>
-            <select value={values.type} onChange={(event) => handleChange("type", event.target.value as CardFormValues["type"]) }>
-              <option value="Creature">Varelse</option>
-              <option value="Spell">Besvärjelse</option>
-              <option value="Artifact">Artefakt</option>
-              <option value="Hero">Hjälte</option>
+          <Field label="Card type" error={errors.type}>
+            <select
+              value={values.type}
+              onChange={(event) => handleChange("type", event.target.value as CardFormValues["type"])}
+            >
+              <option value="Creature">Creature</option>
+              <option value="Spell">Spell</option>
+              <option value="Artifact">Artifact</option>
+              <option value="Hero">Hero</option>
             </select>
           </Field>
 
-          <Field label="Sällsynthet" error={errors.rarity}>
+          <Field label="Rarity" error={errors.rarity}>
             <select
               value={values.rarity}
               onChange={(event) => handleChange("rarity", event.target.value as CardFormValues["rarity"])}
@@ -152,7 +155,7 @@ export function CardEditor({ onChange }: CardEditorProps) {
             </select>
           </Field>
 
-          <Field label="Set-ID" error={errors.setId}>
+          <Field label="Set ID" error={errors.setId}>
             <input
               name="setId"
               value={values.setId}
@@ -176,7 +179,7 @@ export function CardEditor({ onChange }: CardEditorProps) {
             />
           </Field>
 
-          <Field label="Bild URL" error={errors.imageUrl}>
+          <Field label="Image URL" error={errors.imageUrl}>
             <input
               name="imageUrl"
               value={values.imageUrl}
@@ -195,7 +198,7 @@ export function CardEditor({ onChange }: CardEditorProps) {
             />
           </Field>
 
-          <Field label="Liv" error={errors["stats.health"]}>
+          <Field label="Health" error={errors["stats.health"]}>
             <input
               type="number"
               min={1}
@@ -205,7 +208,7 @@ export function CardEditor({ onChange }: CardEditorProps) {
             />
           </Field>
 
-          <Field label="Rustning" error={errors["stats.armor"]}>
+          <Field label="Armor" error={errors["stats.armor"]}>
             <input
               type="number"
               min={0}
@@ -216,17 +219,17 @@ export function CardEditor({ onChange }: CardEditorProps) {
           </Field>
         </div>
 
-        <Field label="Korttext" error={errors.text}>
+        <Field label="Rules text" error={errors.text}>
           <textarea
             rows={4}
             value={values.text}
             onChange={(event) => handleChange("text", event.target.value)}
-            placeholder={"Beskriv kortets effekt och eventuella regler."}
+            placeholder={"Describe the card effect and any special rules."}
           />
         </Field>
 
         <div className="space-y-2">
-          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Nyckelord</label>
+          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Keywords</label>
           <KeywordSelector
             selectedKeywords={values.keywords}
             onAddKeyword={addKeyword}
@@ -286,7 +289,7 @@ function KeywordSelector({
               className="w-full border border-slate-700 bg-slate-900 py-2 pl-3 pr-10 text-sm leading-5 text-slate-100"
               displayValue={() => query}
               onChange={(event) => onQueryChange(event.target.value)}
-              placeholder="Sök efter nyckelord"
+              placeholder="Search keywords"
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400">
               <ChevronUpDownIcon className="h-5 w-5" aria-hidden="true" />
@@ -344,7 +347,7 @@ function KeywordSelector({
           className="inline-flex items-center gap-1 text-xs font-medium text-primary-300"
         >
           <PlusIcon className="h-4 w-4" />
-          Lägg till
+          Add keyword
         </button>
       </div>
     </div>

@@ -10,10 +10,10 @@ interface CardPreviewProps {
 
 export function CardPreview({ card }: CardPreviewProps) {
   return (
-    <div className="card-surface relative flex h-[460px] w-[320px] flex-col overflow-hidden rounded-3xl border border-white/10 p-4 text-slate-100">
+    <div className="card-surface relative mx-auto flex h-[460px] w-[320px] flex-col overflow-hidden rounded-3xl border border-white/10 p-4 text-slate-100">
       <header className="card-header relative flex items-center justify-between rounded-2xl px-4 py-2 text-slate-50 shadow-lg">
         <span className="text-lg font-semibold uppercase tracking-wide">
-          {card.name || "Nytt kort"}
+          {card.name || "New card"}
         </span>
         <span className="badge bg-white/20 text-base font-bold text-slate-900">
           {card.cost}
@@ -31,7 +31,7 @@ export function CardPreview({ card }: CardPreviewProps) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-sm text-slate-400">
-            Ingen bild vald
+            No artwork selected
           </div>
         )}
       </div>
@@ -42,7 +42,7 @@ export function CardPreview({ card }: CardPreviewProps) {
           <span>{card.rarity}</span>
         </div>
         <p className="mt-2 whitespace-pre-line text-slate-100">
-          {card.text || "Korttext visas här. Beskriv effekter och regler."}
+          {card.text || "Rules text appears here. Describe effects and rules."}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {card.keywords.length > 0 ? (
@@ -52,7 +52,7 @@ export function CardPreview({ card }: CardPreviewProps) {
               </span>
             ))
           ) : (
-            <span className="text-xs text-slate-500">Inga nyckelord</span>
+            <span className="text-xs text-slate-500">No keywords</span>
           )}
         </div>
       </div>

@@ -1,60 +1,60 @@
-# CardForge – Kortspelsbyggare
+# CardForge – Card Game Builder
 
-CardForge är ett Next.js-projekt som låter designers bygga, validera och exportera kort till egna kortspel. Prototypen omfattar en avancerad korteditor med live-preview, central nyckelordshantering, deck-check och exportpanel.
+CardForge is a Next.js project that helps designers build, validate, and export cards for custom trading card games. The prototype includes an advanced card editor with live preview, centralized keyword management, a deck validator, and export tools.
 
-## Funktioner
+## Features
 
-- **Korteditor** med Zod-validering och realtidsförhandsvisning.
-- **Nyckelordshantering** med möjlighet att lägga till egna nyckelord.
-- **Deck-check** för att säkerställa att lekar följer formatregler.
-- **Exportpanel** för JSON, PNG och PDF (de sistnämnda som stubbar).
-- **Prisma-schema** för att modellera kort, set, nyckelord och lekar.
+- **Card editor** with Zod validation and live preview.
+- **Keyword management** with support for custom entries.
+- **Deck check** to ensure lists comply with format rules.
+- **Export panel** for JSON, PNG, and PDF (PNG/PDF currently stubbed).
+- **Prisma schema** that models cards, sets, keywords, and decks.
 
-## Kom igång
+## Getting started
 
-1. Installera beroenden:
+1. Install dependencies:
 
    ```bash
    npm install
    ```
 
-2. Kopiera `.env.example` till `.env` och justera vid behov:
+2. Copy `.env.example` to `.env` and update if needed:
 
    ```bash
    cp .env.example .env
    ```
 
-3. Kör databas-migreringar och generera Prisma-klienten:
+3. Run the database migrations and generate the Prisma client:
 
    ```bash
    npx prisma db push
    npx prisma generate
    ```
 
-4. Starta utvecklingsservern:
+4. Start the development server:
 
    ```bash
    npm run dev
    ```
 
-## API-översikt
+## API overview
 
-- `POST /api/cards` – Validerar och sparar ett nytt kort i databasen.
-- `GET /api/cards` – Returnerar listan över skapade kort inklusive nyckelord och setinformation.
-- `POST /api/decks/validate` – Validerar att en lek följer formatreglerna.
+- `POST /api/cards` – Validates and persists a new card in the database.
+- `GET /api/cards` – Returns the list of created cards including keywords and set information.
+- `POST /api/decks/validate` – Validates that a deck follows the format restrictions.
 
-## Testning och kvalitet
+## Testing & quality
 
-Projektet använder `next lint` för statisk analys. Kör:
+The project uses `next lint` for static analysis. Run:
 
 ```bash
 npm run lint
 ```
 
-## Vidare utveckling
+## Future work
 
-- Implementera riktig PNG/PDF-export.
-- Koppla korteditorn till API-routes för att spara och ladda kort.
-- Lägg till autentisering och användarhantering.
+- Implement full PNG/PDF export flows.
+- Connect the card editor to the API routes for saving and loading cards.
+- Add authentication and user management.
 
-Lycka till med vidareutvecklingen av CardForge!
+Happy forging with CardForge!

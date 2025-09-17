@@ -21,7 +21,7 @@ export async function GET() {
     return NextResponse.json(cards);
   } catch (error) {
     console.error("Failed to fetch cards", error);
-    return NextResponse.json({ message: "Kunde inte hämta kort." }, { status: 500 });
+    return NextResponse.json({ message: "Could not fetch cards." }, { status: 500 });
   }
 }
 
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { message: "Validering misslyckades", issues: parsed.error.issues },
+        { message: "Validation failed", issues: parsed.error.issues },
         { status: 422 }
       );
     }
@@ -84,6 +84,6 @@ export async function POST(request: Request) {
     return NextResponse.json(card, { status: 201 });
   } catch (error) {
     console.error("Failed to create card", error);
-    return NextResponse.json({ message: "Något gick fel vid skapandet." }, { status: 500 });
+    return NextResponse.json({ message: "Something went wrong while creating the card." }, { status: 500 });
   }
 }
