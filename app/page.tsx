@@ -45,7 +45,6 @@ export default function HomePage() {
           </ul>
         </div>
       </header>
-
       <section className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:gap-12">
         <div className="order-2 flex flex-col gap-8 lg:order-1">
           <CardEditor onChange={setCard} />
