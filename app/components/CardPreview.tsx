@@ -10,7 +10,7 @@ interface CardPreviewProps {
 
 export function CardPreview({ card }: CardPreviewProps) {
   return (
-    <div className="card-surface relative mx-auto flex h-[460px] w-[320px] flex-col overflow-hidden rounded-3xl border border-white/10 p-4 text-slate-100">
+    <div className="card-surface relative mx-auto flex h-[480px] w-[320px] flex-col overflow-hidden rounded-3xl border border-white/10 p-4 text-slate-100 shadow-2xl sm:h-[520px] sm:w-[360px] lg:h-[600px] lg:w-[420px]">
       <header className="card-header relative flex items-center justify-between rounded-2xl px-4 py-2 text-slate-50 shadow-lg">
         <span className="text-lg font-semibold uppercase tracking-wide">
           {card.name || "New card"}

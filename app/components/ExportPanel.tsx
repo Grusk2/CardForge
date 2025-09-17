@@ -36,24 +36,32 @@ export function ExportPanel({ card }: ExportPanelProps) {
             Download card data in multiple formats for integration or printing.
           </p>
         </div>
-        <button type="button" onClick={handleExport}>
-          <DocumentArrowDownIcon className="mr-2 h-5 w-5" />
+        <button
+          type="button"
+          onClick={handleExport}
+          className="inline-flex items-center gap-2 rounded-full bg-primary-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-primary-500/30 transition hover:bg-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 focus:ring-offset-slate-900"
+        >
+          <DocumentArrowDownIcon className="h-5 w-5" />
           Export {format.toUpperCase()}
         </button>
       </header>
 
       <div className="flex flex-col gap-4 lg:flex-row">
         <div className="flex w-full flex-col gap-2 lg:w-40">
-          <label>Format</label>
-          <select value={format} onChange={(event) => setFormat(event.target.value as typeof format)}>
+          <label className="text-sm font-medium text-slate-300">Format</label>
+          <select
+            value={format}
+            onChange={(event) => setFormat(event.target.value as typeof format)}
+            className="rounded-2xl border border-white/10 bg-slate-950/70 px-3 py-2 text-sm text-slate-200 shadow-inner focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400/30"
+          >
             <option value="json">JSON</option>
             <option value="png">PNG</option>
             <option value="pdf">PDF</option>
           </select>
         </div>
         <div className="flex-1">
-          <label>Preview (JSON)</label>
-          <pre className="mt-2 h-64 overflow-auto rounded-2xl border border-white/5 bg-slate-950/70 p-4 text-xs text-slate-200">
+          <label className="text-sm font-medium text-slate-300">Preview (JSON)</label>
+          <pre className="mt-2 h-64 w-full overflow-auto rounded-2xl border border-white/5 bg-slate-950/70 p-4 font-mono text-xs text-slate-200">
             {jsonPreview}
           </pre>
         </div>

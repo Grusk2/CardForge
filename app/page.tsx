@@ -45,18 +45,18 @@ export default function HomePage() {
           </ul>
         </div>
       </header>
-
-      <section className="grid gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] xl:gap-10">
-        <CardEditor onChange={setCard} />
-        <div className="flex w-full flex-col items-center gap-6 lg:items-stretch">
-          <CardPreview card={card} />
+      <section className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:gap-12">
+        <div className="order-2 flex flex-col gap-8 lg:order-1">
+          <CardEditor onChange={setCard} />
           <ExportPanel card={card} />
+          <div className="grid gap-6 lg:grid-cols-2">
+            <KeywordManager />
+            <DeckBuilder />
+          </div>
         </div>
-      </section>
-
-      <section className="grid gap-6 lg:grid-cols-2">
-        <KeywordManager />
-        <DeckBuilder />
+        <div className="order-1 flex items-start justify-center lg:order-2 lg:sticky lg:top-24">
+          <CardPreview card={card} />
+        </div>
       </section>
     </main>
   );
